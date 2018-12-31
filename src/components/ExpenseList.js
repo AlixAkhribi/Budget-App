@@ -8,8 +8,6 @@ const ExpensesList = (props) => (
     <div>
         <h1>Expenses List</h1>
         {props.expenses.map((expense) => {
-            console.log(expense);
-            
             return <ExpenseListItem key={expense.id} {...expense} />
         })}
     </div>
