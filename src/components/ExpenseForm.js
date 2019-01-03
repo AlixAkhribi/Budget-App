@@ -16,6 +16,14 @@ export default class ExepenseForm extends React.Component {
         this.setState(() => ({ note }))
     }
 
+    onAmountChange = (e) => {
+        const amount = e.target.value;
+
+        if (amount.match(/^\d*(\.\d{0,2})?$/)) {
+            this.setState(() => ({ amount }))
+        }
+    }
+
     render() {
         return (
             <div>
@@ -28,8 +36,10 @@ export default class ExepenseForm extends React.Component {
                         onChange={this.onDescriptionChange}
                     />
                     <input
-                        type='number'
+                        type='text'
                         placeholder='Amount'
+                        value={this.state.amount}                        
+                        onChange={this.onAmountChange}
                     />
                     <textarea
                         placeholder='Add a note for your expense (optional)'
