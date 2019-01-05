@@ -36,10 +36,12 @@ export default class ExepenseForm extends React.Component {
     }
 
     onDateChange = (createdAt) => {
-        this.setState(() => ({ createdAt }))
+        if (createdAt) {
+            this.setState(() => ({ createdAt }))
+        }
     }
 
-    onCalendarFocusChange = (focused) => {
+    onCalendarFocusChange = ({focused}) => {
         this.setState(() => ({ calendarFocused: focused }))
     }
 
