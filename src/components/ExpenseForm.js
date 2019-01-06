@@ -14,7 +14,8 @@ export default class ExepenseForm extends React.Component {
         note: '',
         amount: '',
         createdAt: moment(),
-        calendarFocused: false
+        calendarFocused: false,
+        error: ''
     };
 
     onDescriptionChange = (e) => {
@@ -25,7 +26,7 @@ export default class ExepenseForm extends React.Component {
     onNoteChange = (e) => {
         const note = e.target.value;
         this.setState(() => ({ note }))
-    }
+    };
 
     onAmountChange = (e) => {
         const amount = e.target.value;
@@ -33,22 +34,37 @@ export default class ExepenseForm extends React.Component {
         if (amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
             this.setState(() => ({ amount }))
         }
-    }
+    };
 
     onDateChange = (createdAt) => {
         if (createdAt) {
             this.setState(() => ({ createdAt }))
         }
-    }
+    };
 
-    onCalendarFocusChange = ({focused}) => {
+    onCalendarFocusChange = ({ focused }) => {
         this.setState(() => ({ calendarFocused: focused }))
+    };
+
+    onFormSubmit = (e) => {
+        e.preventDefault()
+
+        if (!this.state.description || !this.state.amount) {
+            this.setState(() => ({
+                error: 'Please provide description for description and amount'
+            }))
+        } else {
+            this.setState(() => ({
+                error: ''
+            }))
+        }
     }
 
     render() {
         return (
             <div>
-                <form>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form onSubmit={this.onFormSubmit}>
                     <input
                         type='text'
                         placeholder='description'
