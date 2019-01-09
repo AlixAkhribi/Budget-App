@@ -1,20 +1,27 @@
+import moment from 'moment';
+
 // Get Visible Expenses
 
 const getVisibleExpenses = (expenses, { text, sortBy, endDate, startDate }) => {
     return expenses.filter((expense) => {
 
-        const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
-        const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+        const momentCreatedAt = moment(expense.createdAt);
+        const startDateMatch = startDate ? startDate.isSameOrBefore(momentCreatedAt, 'day') : true;
+        const endDateMatch = endDate ? startDate.isSameOrAfter(momentCreatedAt, 'day') : true;
         const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
 
         return startDateMatch && endDateMatch && textMatch;
     }).sort((a, b) => {
-        if (sortBy === 'date'){
-           return a.createdAt < b.createdAt ? 1 : -1;
-        } else if (sortBy === 'amount'){
-            return a.amount < b.amount ? 1 : -1;
+        switch (sortBy) {
+            case 'date':
+                return a.createdAt < b.createdAt ? 1 : -1;
+            case 'amount':
+                return a.amount < b.amount ? 1 : -1;
         }
     })
 }
+
+
+
 
 export default getVisibleExpenses
