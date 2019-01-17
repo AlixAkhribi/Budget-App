@@ -47,3 +47,13 @@ test('should set end date filter ', () => {
     const state = filterReducer(undefined, action);
     expect(state.endDate).toEqual(endDate)
 });
+
+test('should set text filter ', () => {
+    const text = "This is my text filter"
+    const action = {
+        type: 'SET_TEXT_FILTER',
+        text
+    }
+    const state = filterReducer(undefined, action);
+    expect(state.text).toBe(text)
+});
